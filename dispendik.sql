@@ -1,0 +1,1108 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 24, 2020 at 07:34 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.34
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `dispendik`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `input_data`
+--
+
+CREATE TABLE `input_data` (
+  `kode_lembaga` varchar(5) NOT NULL,
+  `no_kontrak` char(50) NOT NULL,
+  `sumber_dana` varchar(10) NOT NULL,
+  `kb` varchar(50) NOT NULL,
+  `kk` varchar(50) NOT NULL,
+  `jenis_nama` varchar(50) NOT NULL,
+  `merk` varchar(50) NOT NULL,
+  `ukuran` varchar(50) NOT NULL,
+  `bahan` varchar(50) NOT NULL,
+  `nama_toko` varchar(50) NOT NULL,
+  `tgl_terima` date NOT NULL,
+  `harga_satuan` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `harga_total` int(11) NOT NULL,
+  `tb_cawl` enum('tribulan 1','tribulan 2','tribulan 3','tribulan 4','caturwulan 1','caturwulan 2','caturwulan 3') NOT NULL,
+  `ruang` varchar(50) NOT NULL,
+  `keterangan` varchar(50) NOT NULL,
+  `f_nota` longblob NOT NULL,
+  `f_barang` blob NOT NULL,
+  `sambung` varchar(10) NOT NULL,
+  `stat_perubahan` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `input_data`
+--
+
+INSERT INTO `input_data` (`kode_lembaga`, `no_kontrak`, `sumber_dana`, `kb`, `kk`, `jenis_nama`, `merk`, `ukuran`, `bahan`, `nama_toko`, `tgl_terima`, `harga_satuan`, `jumlah`, `harga_total`, `tb_cawl`, `ruang`, `keterangan`, `f_nota`, `f_barang`, `sambung`, `stat_perubahan`) VALUES
+('A00', 'A00.A01.D2020-11-18.10', 'D', '1', 'A01', 'coba', 'coba', 'coba', 'coba', 'coba', '2020-11-18', 150000, 10, 1500000, 'tribulan 4', 'LABORATURIUM IPA', 'rusak karena banjir', 0x7061726973382e6a7067, '', '1', '2'),
+('A00', 'A00.A01.D2020-11-18.4', 'D', '1', 'A01', 'coba', 'coba', 'coba', 'coba', 'coba', '2020-11-18', 5000000, 4, 20000000, 'tribulan 4', 'LABORATURIUM IPA', 'baik', 0x6a656d626174616e2d6d657261682d313838302d313930302d36333078333830352e6a7067, '', '1', '1'),
+('A00', 'A00.B02.M2020-11-22.3', 'M', '2', 'B02', 'coba', 'coba', 'coba', 'coba', 'coba', '2020-11-22', 25000, 3, 75000, 'tribulan 4', 'RUANG KETERAMPILAN', 'baik', 0x6f6e652d70696563652d6c6f676f5f3338343078323136305f78747261666f6e646f735f636f6d2e6a7067, '', '1', '1'),
+('B02', 'B02.A01.D2020-11-17.10', 'D', '1', 'A01', 'coba', 'coba', 'coba', 'coba', 'coba', '2020-11-17', 5000000, 10, 50000000, 'tribulan 4', 'PERPUSTAKAAN', 'baik', 0x6a656d626174616e2d6d657261682d313838302d313930302d36333078333830332e6a7067, '', '2', '2'),
+('C00', 'C00.B01.D2020-11-11.4', 'D', '2', 'B01', 'coba', 'coba', 'coba', 'coba', 'coba', '2020-11-11', 5000000, 4, 20000000, 'tribulan 4', 'RUANG GURU', 'baik', '', '', '3', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_besar`
+--
+
+CREATE TABLE `kategori_besar` (
+  `no_kategori` int(11) NOT NULL,
+  `kode_kb` char(1) NOT NULL,
+  `nama_kategori` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori_besar`
+--
+
+INSERT INTO `kategori_besar` (`no_kategori`, `kode_kb`, `nama_kategori`) VALUES
+(1, 'A', 'tanah'),
+(2, 'B', 'Peralatan dan Mesin'),
+(3, 'C', 'Gedung dan Bangunan'),
+(4, 'D', 'Jalan, Jaringan, dan Irigasi'),
+(5, 'E', 'Aset Tetap Lainnya'),
+(6, 'F', 'Konstruksi Dalam Pengerjaan');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_kecil`
+--
+
+CREATE TABLE `kategori_kecil` (
+  `no` int(11) NOT NULL,
+  `kode_kat` char(3) NOT NULL,
+  `uraian` varchar(50) NOT NULL,
+  `no_kategori_besar` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori_kecil`
+--
+
+INSERT INTO `kategori_kecil` (`no`, `kode_kat`, `uraian`, `no_kategori_besar`) VALUES
+(1, 'B02', 'ALAT ANGKUTAN', 2),
+(2, 'B14', 'ALAT BANTU EKSPLORASI', 2),
+(3, 'B03', 'ALAT BENGKEL DAN ALAT UKUR', 2),
+(4, 'B01', 'ALAT BESAR', 2),
+(5, 'B11', 'ALAT EKSPLORASI', 2),
+(6, 'B05', 'ALAT KANTOR DAN RUMAH TANGGA', 2),
+(7, 'B07', 'ALAT KEDOKTERAN DAN KESEHATAN', 2),
+(8, 'B15', 'ALAT KESELAMATAN KERJA', 2),
+(9, 'B08', 'ALAT LABORATORIUM', 2),
+(10, 'B12', 'ALAT PENGEBORAN', 2),
+(11, 'B16', 'ALAT PERAGA', 2),
+(12, 'B04', 'ALAT PERTANIAN', 2),
+(13, 'B13', 'ALAT PRODUKSI, PENGOLAH DAN PEMURNIAN', 2),
+(14, 'B06', 'ALAT STUDIO, KOMUNIKASI DAN PEMANCAR', 2),
+(15, 'E01', 'BAHAN PERPUSTAKAAN', 5),
+(16, 'D02', 'BANGUNAN AIR', 4),
+(17, 'C01', 'BANGUNAN GEDUNG', 3),
+(18, 'C03', 'BANGUNAN MENARA', 3),
+(19, 'E02', 'BARANG BERCORAK KESENIAN/KEBUDAYAAN/OLAH RAGA', 5),
+(20, 'D03', 'INSTALASI', 4),
+(21, 'D01', 'JALAN DAN JEMBATAN', 4),
+(22, 'D04', 'JARINGAN', 4),
+(23, 'B10', 'KOMPUTER', 2),
+(24, 'C02', 'MONUMEN', 3),
+(25, 'B19', 'PERALATAN OLAH RAGA', 2),
+(26, 'B17', 'PERALATAN PROSES/PRODUKSI', 2),
+(27, 'B09', 'PERSENJATAAN', 2),
+(28, 'B18', 'RAMBU-RAMBU', 2),
+(29, 'A01', 'TANAH', 1),
+(30, 'C04', 'TUGU TITIK KONTROL/PASTI', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kecamatan`
+--
+
+CREATE TABLE `kecamatan` (
+  `kode_kec` char(1) NOT NULL,
+  `nama_kec` char(15) NOT NULL,
+  `ID` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kecamatan`
+--
+
+INSERT INTO `kecamatan` (`kode_kec`, `nama_kec`, `ID`) VALUES
+('A', 'SIDOARJO', 1),
+('B', 'BUDURAN', 2),
+('C', 'CANDI', 3),
+('D', 'PORONG', 4),
+('E', 'JABON', 5),
+('F', 'TANGGULANGIN', 6),
+('G', 'TULANGAN', 7),
+('H', 'KREMBUNG', 8),
+('I', 'KRIAN', 9),
+('J', 'BALONGBENDO', 10),
+('K', 'TARIK', 11),
+('L', 'PRAMBON', 12),
+('M', 'WONOAYU', 13),
+('N', 'TAMAN', 14),
+('O', 'SUKODONO', 15),
+('P', 'GEDANGAN', 16),
+('Q', 'WARU', 17),
+('R', 'SEDATI', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lembaga`
+--
+
+CREATE TABLE `lembaga` (
+  `kode_lembaga` char(10) NOT NULL,
+  `nama_lembaga` varchar(30) NOT NULL,
+  `kode_kec` char(10) NOT NULL,
+  `nama_kec` char(30) NOT NULL,
+  `ID_kec` int(3) NOT NULL,
+  `alamat_kec` varchar(100) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `level` int(11) NOT NULL DEFAULT 3
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lembaga`
+--
+
+INSERT INTO `lembaga` (`kode_lembaga`, `nama_lembaga`, `kode_kec`, `nama_kec`, `ID_kec`, `alamat_kec`, `password`, `level`) VALUES
+('A00', 'UPTD SIDOARJO', 'A', 'SIDOARJO', 1, 'Sidoarjo', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A01', 'SDN PUCANG I', 'A', 'SIDOARJO', 1, 'Sidoarjo', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A02', 'SDN PUCANG II', 'A', 'SIDOARJO', 1, 'Sidoarjo', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A03', 'SDN PUCANG III', 'A', 'SIDOARJO', 1, 'Sidoarjo', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A04', 'SDN PUCANG IV', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A05', 'SDN MAGERSARI', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A06', 'SDN SIDOKUMPUL I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A07', 'SDN LEMAHPUTRO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A08', 'SDN SIDOKARE I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A09', 'SDN SIDOKARE II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A10', 'SDN CELEP', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A11', 'SDN CEBANG I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A12', 'SDN RANGKAH KIDUL', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A13', 'SDN BULUSIDOKARE', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A14', 'SDN PUCANGANOM', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A15', 'SDN SIDOKLUMPUK', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A16', 'SDN BLURUKIDUL I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A17', 'SDN BLURUKIDIUL II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A18', 'SDN KEMIRI', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A19', 'SDN JATI', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A20', 'SDN BANJARBENDO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A21', 'SDN SUKO I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A22', 'SDN SUKO II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A23', 'SDN LEBO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A24', 'SDN URANGAGUNG', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A25', 'SDN CEMENGBAKALAN I', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A26', 'SDN CEMENGBAKALAN II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A27', 'SDN RUMPUT', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A28', 'SDN SARIROGO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A29', 'SDN PUCANG V', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A30', 'SDN SEKARDANGAN', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A31', 'SDN SIDOKAREIII', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A32', 'SDN LEMAHPUTRO II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A33', 'SDN GEBANG II', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A34', 'SDN CEMENGKALANG', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A35', 'SDN SIDOKARE IV', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A36', 'SMPN 1 SIDOARJO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A37', 'SMPN 2 SIDOARJO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A38', 'SMPN 3 SIDOARJO ', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A39', 'SMPN 4 SIDOARJO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A40', 'SMPN 5 SIDORJO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('A41', 'SMPN 6 SIDOARJO', 'A', 'SIDOARJO', 1, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B00', 'UPTD BUDURAN', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B01', 'SDN WADUNGASIH 2', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B02', 'SDN SIDOMULYO ', 'B', 'BUDURAN', 2, 'buduran', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B03', 'SDN SAWOHAN 2', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B04', 'SDN BUDURAN', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B05', 'SDN SIDOKERTO', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B06', 'SDN BANJAR KEMANTREN 1', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B07', 'SDN BANJAR KEMANTREN 2', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B08', 'SDN SUKOREJO', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B09', 'SDN SIDOKEPUNG 1', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B10', 'SDN ENTALSEWU', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B11', 'SDN PAGERWOJO', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B12', 'SDN SIWALANPANJI 1', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B13', 'SDN WADUNGASIH 1', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B14', 'SDN DAMARSIH ', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B15', 'SDN SAWOHAN 1', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B16', 'SDN SIDOKEPUNG 2', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B17', 'SDN PRASUNG', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B18', 'SDN BANJARSARI', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B19', 'SDN DUKUH TENGAH ', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B20', 'SMPN 1 BUDURAN', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B21', 'SMPN 2 BUDURAN', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('B22', 'SMPN SATU ATAP BUDURAN', 'B', 'BUDURAN', 2, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C00', 'UPTD CANDI', 'C', 'CANDI', 3, 'candi', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C01', 'SDN CANDI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C02', 'SDN LARANGAN', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C03', 'SDN GELAM I', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C04', 'SDN GELAM II', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C05', 'SDN BALANGDOWO', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C06', 'SDN SUMORAME', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C07', 'SDN KALIPECABEAN', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C08', 'SDN SUGIHWARAS', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C09', 'SDN SUMOKALI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C10', 'SDN KEDUNGPELUK I', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C11', 'SDN DURUNGBANJAR', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C12', 'SDN DURUNGBEDUG', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C13', 'SDN SEPANDE', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C14', 'SDN KEBONSARI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C15', 'SDN KLURAK', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C16', 'SDN BLIGO', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C17', 'SDN SIDODADI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C18', 'SDN KEDUNGKENDO', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C19', 'SDN TENGGULUNAN', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C20', 'SDN KARANGTANJUNG', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C21', 'SDN KENDALPECABEAN', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C22', 'SDN WEDORO KLURAK', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C23', 'SDN NGAMPELSARI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C24', 'SDN JAMBANGAN', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C25', 'SDN KEDUNG PELUK II', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C26', 'SDN BALONGGABUS', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C27', 'SMPN 1 CANDI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C28', 'SMPN 2 CANDI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('C29', 'SMPN 3 CANDI', 'C', 'CANDI', 3, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D00', 'UPTD PORONG', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D01', 'SDN MINDI I', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D02', 'SDN PORONG', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D03', 'SDN GEDANG I', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D04', 'SDN GEDANG II', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D05', 'SDN KESAMBI', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D06', 'SDN LAJUK', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D07', 'SDN WUNUT I', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D08', 'SDN WUNUT II', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D09', 'SDN PAMOTAN I', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D10', 'SDN KEDUNGSOLO', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D11', 'SDN GLAGAHARUM', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D12', 'SDN KEBOANAGUNG 1', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D13', 'SDN KEBOANAGUNG 2', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D14', 'SDN PESAWAHAN', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D15', 'SDN CANDIPARI I', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D16', 'SDN CANDIPARI II', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D17', 'SDN JUWET KENONGO', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D18', 'SDN KEBAKALAN', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D19', 'SDN PLUMBON', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D20', 'SDN PLUMBON II', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D21', 'SDN KEDUNGBOTO', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D22', 'SDN PAMOTAN II', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D23', 'SDN KEBONAGUNG IV', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D24', 'SDLB JUWETKENONGO', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D25', 'SMPN 1 PORONG', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D26', 'SMPN 2 PORONG', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('D27', 'SMPN 3 PORONG', 'D', 'PORONG', 4, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E00', 'UPTD JABON', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E01', 'SDN JEMIRAHAN', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E02', 'SDN DUKUHSARI I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E03', 'SDN TROMPOHASRI', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E04', 'SDN KEDUNGREJO I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E05', 'SDN SEMAMBUNG', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E06', 'SDN PERMISAN', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E07', 'SDN PANGGREH I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E08', 'SDN KUPANG I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E09', 'SDN BALONGTANI', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E10', 'SDN KEDUNGCANGKRING', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E11', 'SDN PANGGREH II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E12', 'SDN DUKUHSARI II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E13', 'SDN KEDUNGPANDAN I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E14', 'SDN KEBOGUYANG', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E15', 'SDN TAMBAK KALISOGO I', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E16', 'SDN KEDUNGREJO II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E17', 'SDN TAMBAK KALISOGO II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E18', 'SDN TROMPOASRI II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E19', 'SDN KEDUNGPANDAN II', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E20', 'SDN KUPANG III', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E21', 'SDN KUPANG IV', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E22', 'SDN TROMPOASRI III', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E23', 'SMPN 1 JABON', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E24', 'SMPN 2 JABON', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('E25', 'SMPN SATU ATAP JABON', 'E', 'JABON', 5, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F00', 'UPTD TANGGULANGIN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F01', 'SDN BORO', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F02', 'SDN KLUDAN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F03', 'SDN KALITENGAH 1', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F04', 'SDN KEDUNGBANTENG', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F05', 'SDN KALISAMPURNO 1', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F06', 'SDN KEDENSARI I', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F07', 'SDN RANDEGAN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F08', 'SDN GANGGANGPANJANG', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F09', 'SDN KETAPANG', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F10', 'SDN GEMPOLSARI', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F11', 'SDN PENATAR SEWU', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F12', 'SDN BANJARASRI', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F13', 'SDN KETEGAN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F14', 'SDN KEDENSARI II', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F15', 'SDN NGABAN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F16', 'SDN PUTAT', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F17', 'SDN KALIDAWIR', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F18', 'SDN SENTUL', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F19', 'SDN BANJARPANJI', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F20', 'SDN KALITENGAH 2', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F21', 'SDN KALISAMPURNO 2', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F22', 'SDN KALISAMPURNO 3', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F23', 'SMPN 1 TANGGULANGIN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('F24', 'SMPN 2 TANGGULANGIN', 'F', 'TANGGULANGIN', 6, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G00', 'UPTD TULANGAN', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G01', 'SDN TULANGAN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G02', 'SDN TULANGAN 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G03', 'SDN KENONGO 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G04', 'SDN KENONGO 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G05', 'SDN KEPADANGAN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G06', 'SDN KEPATIHAN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G07', 'SDN KEPATIHAN 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G08', 'SDN GELANG 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G09', 'SDN GELANG 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G10', 'SDN PANGKEMIRI 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G11', 'SDN PANGKEMIRI 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G12', 'SDN KEMANTREN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G13', 'SDN KEMANTREN 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G14', 'SDN JIKEN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G15', 'SDN KEBARON 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G16', 'SDN JANTI1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G17', 'SDN JANTI2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G18', 'SDN TLASIH', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G19', 'SDN MEDALEM', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G20', 'SDN SUDIMORO', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G21', 'SDN KEDONDONG 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G22', 'SDN GROGOL', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G23', 'SDN KAJEKSAN', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G24', 'SDN GRINTING', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G25', 'SDN KEPUHKEMIRI', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G26', 'SDN GRABAGAN 1', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G27', 'SDN KEPUNTEN', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G28', 'SDN SINGOPADU', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G29', 'SDN MODONG', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G30', 'SDN KEPADANGAN 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G31', 'SDN KEDONDONG 2', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('G32', 'SMPN 1 TULANGAN', 'G', 'TULANGAN', 7, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H00', 'UPTD KREMBUNG', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H01', 'SDN KREMBUNG I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H02', 'SDN KREMBUNG II', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H03', 'SDN LEMUJUT', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H04', 'SDN CANGKRING I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H05', 'SDN KERET I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H06', 'SDN WONOMLATI I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H07', 'SDN KANDANGAN', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H08', 'SDN MOJORUNTUT I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H09', 'SDN MOJORUNTUT II', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H10', 'SDN TANJEKWAGIR', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H11', 'SDN KEDUNGRAWAN I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H12', 'SDN GADING', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H13', 'SDN WANGKAL', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H14', 'SDN PLOSO', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H15', 'SDN KEPER I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H16', 'SDN KEDUNGSUMUR I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H17', 'SDN TAMBAKREJO I', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H18', 'SDN TAMBAKREJO II', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H19', 'SDN JENGGOT', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H20', 'SDN WAUNG', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H21', 'SDN REJENI', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H22', 'SDN KEDUNGSUMUR III', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H23', 'SDN KEDUNGRAWAN II', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H24', 'SDN MOJORUNTUT III', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H25', 'SDN CANGKRING II', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H26', 'SDN BALONGGARUT', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H27', 'SMPN 1 KREMBUNG', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('H28', 'SDN 2 KREMBUNG', 'H', 'KREMBUNG', 8, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I00', 'UPTD KRIAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I01', 'SDN KRIAN I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I02', 'SDN KRIAN II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I03', 'SDN KRIAN III', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I04', 'SDN KRIAN IV', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I05', 'SDN SIDOMULYO I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I06', 'SDN SIDOMULYO II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I07', 'SDN KRATON', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I08', 'SDN TROPODO', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I09', 'SDN SEDENGANMIJEN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I10', 'SDN GAMPING I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I11', 'SDN TERIK', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I12', 'SDN KEMASAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I13', 'SDN KEBOHARAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I14', 'SDN PONOKAWAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I15', 'SDN SIDOMOJO', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I16', 'SDN TAMBAK KEMERAAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I17', 'SDN TEMPEL', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I18', 'SDN WATUGOLONG I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I19', 'SDN BARENGKRAJAN I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I20', 'SDN SIDOREJO', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I21', 'SDN JATIKALANG I', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I22', 'SDN JATIKALANG II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I23', 'SDN TERUNGWETAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I24', 'SDN TERUNGKULON', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I25', 'SDN JUNWANGI', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I26', 'SDN JERUKGAMPING', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I27', 'SDN KATERUNGAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I28', 'SDN WATUGOLONG II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I29', 'SDN GAMPING II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I30', 'SDN BARENGKRAJAN II', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I31', 'SMPN 1 KRIAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I32', 'SMPN 2 KRIAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('I33', 'SMPN 3 KRIAN', 'I', 'KRIAN', 9, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J00', 'UPTD BALONGBENDO', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J01', 'SDN BALONGBENDO', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J02', 'SDN SUWALUH I', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J03', 'SDN SUWALUH II', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J04', 'SDN BAKALAN WRINGINPITU', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J05', 'SDN PENAMBANGAN', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J06', 'SDN JABARAN', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J07', 'SDN WATESARI', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J08', 'SDN KEMANGSEN I', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J09', 'SDN SEKETI', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J10', 'SDN JERUKLEGI I', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J11', 'SDN WARUBERON', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J12', 'SDN SEDURI I', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J13', 'SDN SEDURI II', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J14', 'SDN WONOKUPANG', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J15', 'SDN WONOKARANG', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J16', 'SDN BOGEMPINGGIR', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J17', 'SDN BAKUNG PRINGGODANI', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J18', 'SDN BAKUNG TEMENGGUNGAN', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J19', 'SDN KEDUNG SUKODANI', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J20', 'SDN SINGKALAN', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J21', 'SDN SUMOKEMBANGSRI I', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J22', 'SDN KEMANGSEN II', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J23', 'SDN SUMOKEMBANGSRI III', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J24', 'SDN JERUKLEGI II', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J25', 'SDN GAGANGKEPUHSARI', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J26', 'SMPN 1 BALONGBENDO', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('J27', 'SMPN 2 BALONGBENDO', 'J', 'BALONGBENDO', 10, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K00', 'UPTD TARIK', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K01', 'SDN TARIK I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K02', 'SDN TARIK II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K03', 'SDN BALONGMACEKAN', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K04', 'SDN SINGOGALIH', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K05', 'SDN KEMUNING', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K06', 'SDN JANTI 1', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K07', 'SDN SEGODOBANCANG', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K08', 'SDN KEDINDING', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K09', 'SDN KALIMATI II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K10', 'SDN GEMPOLKLUTUK', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K11', 'SDN KALIMATI I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K12', 'SDN KLANTINGSARI I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K13', 'SDN KENDALSEWU I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K14', 'SDN MERGOBENER', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K15', 'SDN MERGOSARI I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K16', 'SDN BANJARWUNGU I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K17', 'SDN MINDUGADING', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K18', 'SDN KEDUNGBOCOK', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K19', 'SDN GAMPINGROWO I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K20', 'SDN SEBANI I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K21', 'SDN MLIRIPROWO', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K22', 'SDN KRAMAT TEMENGGUNG I', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K23', 'SDN KLANTINGSARI II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K24', 'SDN JANTI 2', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K25', 'SDN MERGOSARI II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K26', 'SDN BANJARWUNGU II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K27', 'SDN SEBANI II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K28', 'SDN GAMPINGROWO II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K29', 'SDN KRAMAT TEMENGGUNG II', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K30', 'SMPN 1 TARIK', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('K31', 'SMPN 2 TARIK', 'K', 'TARIK', 11, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L00', 'UPTD PRAMBON', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L01', 'SDN JEDONGCANGKRING', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L02', 'SDN KAJAR TENGGULI', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L03', 'SDN GAMPANG', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L04', 'SDN KEDUNGSUGO 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L05', 'SDN WONOPLINTAHAN 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L06', 'SDN PRAMBON 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L07', 'SDN SIMOGIRANG 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L08', 'SDN PRAMBON 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L09', 'SDN KEDUNGWONOKERTO', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L10', 'SDN TEMU 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L11', 'SDN TEMU 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L12', 'SDN BENDOTRETEK', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L13', 'SDN WATUTULIS 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L14', 'SDN WATUTULIS 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L15', 'SDN SIMOGIRANG 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L16', 'SDN CANGKRINGTURI', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L17', 'SDN WONOPLINTAHAN 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L18', 'SDN GEDANGROWO', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L19', 'SDN WIROBITING 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L20', 'SDN WIROBITING 2', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L21', 'SDN PEJANGKUNGAN', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L22', 'SDN SIMPANG', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L23', 'SDN BULANG', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L24', 'SDN KEDUNGSUGO 1', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L25', 'SDN KEDUNGKEMBAR', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L26', 'SDN JATI ALUN-ALUN', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L27', 'SDN JATIKALANG', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('L28', 'SMPN 1 PRAMBON', 'L', 'PRAMBON', 12, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M00', 'UPTD WONOAYU', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M01', 'SDN WONOAYU I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M02', 'SDN JIMBARAN WETAN', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M03', 'SDN JIMBARAN KULON', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M04', 'SDN KETIMANG', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M05', 'SDN PILANG I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M06', 'SDN SEMAMBUNG', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M07', 'SDN TANGGUL', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M08', 'SDN SIMOANGIN-ANGIN', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M09', 'SDN POPOH', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M10', 'SDN WONOKALANG', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M11', 'SDN WONOKASIAN I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M12', 'SDN WONOKASIAN II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M13', 'SDN PAGERNGUMBUK I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M14', 'SDN PLOSO', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M15', 'SDN CANDINEGORO', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M16', 'SDN PLAOSAN I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M17', 'SDN LAMBANGAN', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M18', 'SDN SAWOCANGKRING', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M19', 'SDN KARANGPURI I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M20', 'SDN BECIRONGENGOR', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M21', 'SDN SUMBEREJO I', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M22', 'SDN MULYODADI', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M23', 'SDN SIMOKETAWANG', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M24', 'SDN PAGERNGUMBUK II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M25', 'SDN KARANGPURI II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M26', 'SDN PILANG II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M27', 'SDN WONOAYU II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M28', 'SDN PLAOSAN II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M29', 'SDN SUMBEREJO II', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M30', 'SDN MOJORANGAGUNG', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M31', 'SMPN 1 WONOAYU', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('M32', 'SMPN 2 WONOAYU', 'M', 'WONOAYU', 13, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N00', 'UPTD TAMAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N01', 'SDN GELURAN I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N02', 'SDN GELURAN II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N03', 'SDN GELURAN III', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N04', 'SDN TAWANGSARI I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N05', 'SDN WONOCOLO I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N06', 'SDN WONOCOLO II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N07', 'SDN WONOCOLO IV', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N08', 'SDN SEPANJANG I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N09', 'SDN BEBEKAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N10', 'SDN KEDUNGTURI', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N11', 'SDN KETEGAN I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N12', 'SDN TAMAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N13', 'SDN WAGE I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N14', 'SDN BOHAR', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N15', 'SDN JEMUNDO I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N16', 'SDN SAMBIBULU', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N17', 'SDN GILANG I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N18', 'SDN BRINGINBENDO I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N19', 'SDN BRINGINBENDO II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N20', 'SDN TROSOBO I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N21', 'SDN PERTAPANMADURETNO', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N22', 'SDN KREMBANGAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N23', 'SDN TANJUNGSARI I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N24', 'SDN SIDODADI I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N25', 'SDN KRAMATJEGU I', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N26', 'SDN SADANG', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N27', 'SDN KLETEK', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N28', 'SDN TANJUNGSARI II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N29', 'SDN TROSOBO II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N30', 'SDN JEMUNDO II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N31', 'SDN SEPANJANG II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N32', 'SDN GILANG II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N33', 'SDN KRAMATJEGU II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N34', 'SDN KETEGAN III', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N35', 'SDN WAGE II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N36', 'SDN KALIJATEN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N37', 'SDN NGELOM', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N38', 'SDN TAWANGSARI III', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N39', 'SDN SIDODADI II', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N40', 'SMPN 1 TAMAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N41', 'SMPN 2 TAMAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('N42', 'SMPN 3 TAMAN', 'N', 'TAMAN', 14, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O00', 'UPTD SUKODONO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O01', 'SDN SUKODONO I', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O02', 'SDN PEKARUNGAN', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O03', 'SDN KEBONAGUNG I', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O04', 'SDN SURUH', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O05', 'SDN PADEMONEGORO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O06', 'SDN ANGGASWANGI I', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O07', 'SDN PLUMBUNGAN', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O08', 'SDN PANJUNAN', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O09', 'SDN KLAGEN', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O10', 'SDN KLOPOSEPULUH I', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O11', 'SDN JUMPUTREJO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O12', 'SDN CANGKRINGSARI', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O13', 'SDN SAMBUNGREJO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O14', 'SDN NGARESREJO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O15', 'SDN JOGOSATRU', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O16', 'SDN MASANGAN WETAN', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O17', 'SDN SUKO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O18', 'SDN MASANGANKULON', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O19', 'SDN BANGSRI', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O20', 'SDN ANGGASWANGI II', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O21', 'SDN KEBONAGUNG II', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O22', 'SDN SUKODONO II', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O23', 'SDN KLOPOSEPULUH II', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O24', 'SMPN 1 SUKODONO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('O25', 'SMPN 2 SUKODONO', 'O', 'SUKODONO', 15, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P00', 'UPTD GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P01', 'SDN GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P02', 'SDN KEBOANSIKEP I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P03', 'SDN KEBOAN ANOM', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P04', 'SDN GANTING', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P05', 'SDN KARANGBONG', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P06', 'SDN TEBEL', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P07', 'SDN SRUNI I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P08', 'SDN PUNGGUL I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P09', 'SDN PUNGGUL II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P10', 'SDN KETAJEN I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P11', 'SDN KETAJEN II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P12', 'SDN WEDI', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P13', 'SDN GEMURUNG', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P14', 'SDN SAWOTRATAP I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P15', 'SDN SAWOTRATAP II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P16', 'SDN SEMAMBUNG I', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P17', 'SDN SEMAMBUNG II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P18', 'SDN BANGAH', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P19', 'SDN KEBOAN SIKEP II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P20', 'SDN SRUNI II', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P21', 'SDN KRAGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P22', 'SDLB GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P23', 'SMPN 1 GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P24', 'SMPN 2 GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('P25', 'SMPLB GEDANGAN', 'P', 'GEDANGAN', 16, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q00', 'UPTD WARU', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q01', 'SDN TROPODO I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q02', 'SDN PEPELEGI I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q03', 'SDN KUREKSARI', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q04', 'SDN WADUNGASRI', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q05', 'SDN BERBEK', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q06', 'SDN TAMBAKSAWAH', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q07', 'SDN JANTI II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q08', 'SDN WEDORO I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q09', 'SDN KEPUHKIRIMAN I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q10', 'SDN NGINGAS', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q11', 'SDN TAMBAKOSO', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q12', 'SDN TAMBAKSUMUR', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q13', 'SDN TROPODO II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q14', 'SDN PEPELEGI II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q15', 'SDN KEPUHKIRIMAN II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q16', 'SDN WARU I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q17', 'SDN WARU II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q18', 'SDN KEDUNGREJO', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q19', 'SDN JANTI I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q20', 'SDN BUNGURASIH', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q21', 'SDN MEDAENG I', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q22', 'SDN MEDAENG II', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q23', 'SDN TAMBAKREJO', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q24', 'SMPN 1 WARU', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q25', 'SMPN 2 WARU', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q26', 'SMPN 3 WARU', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('Q27', 'SMPN 4 WARU', 'Q', 'WARU', 17, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R00', 'UPTD SEDATI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R01', 'SDN SEDATIGEDE I', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R02', 'SDN SEDATI AGUNG', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R03', 'SDN KWANGSAN', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R04', 'SDN BUNCITAN', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R05', 'SDN BANJARKEMUNING', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R06', 'SDN CEMANDI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R07', 'SDN KALANGANYAR', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R08', 'SDN GISIK CEMANDI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R09', 'SDN SEMAMPIR I', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R10', 'SDN PABEAN I', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R11', 'SDN BETRO', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R12', 'SDN SEDATIGEDE II', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R13', 'SDN PABEAN II', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R14', 'SDN PEPE', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R15', 'SDN PULUNGAN', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R16', 'SDN PRANTI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R17', 'SDN SEGOROTAMBAK', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R18', 'SMPN 1 SEDATI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3),
+('R19', 'SMPN 2 SEDATI', 'R', 'SEDATI', 18, '', '4b52254f5da1c40c5e25075c9945a04e', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_admin`
+--
+
+CREATE TABLE `login_admin` (
+  `id_admin` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `nama_admin` varchar(30) NOT NULL,
+  `level` int(11) NOT NULL,
+  `nip` varchar(30) NOT NULL,
+  `jk` varchar(12) NOT NULL,
+  `no_hp` varchar(12) NOT NULL,
+  `alamat` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login_admin`
+--
+
+INSERT INTO `login_admin` (`id_admin`, `username`, `password`, `nama_admin`, `level`, `nip`, `jk`, `no_hp`, `alamat`) VALUES
+(1, 'admin', '202cb962ac59075b964b07152d234b70', 'ahmad', 1, '1002', 'laki-laki', '08111', 'sidoarjo'),
+(11, 'aan', '202cb962ac59075b964b07152d234b70', 'subhan', 2, '1567', '', '09889', 'Sidoarjo'),
+(12, 'abi', '202cb962ac59075b964b07152d234b70', 'abi', 2, '1234', 'laki-laki', '0879', 'babat'),
+(14, 'ari', '202cb962ac59075b964b07152d234b70', 'ari', 2, '999', 'laki-laki', '09889', 'Sidoarjo');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_koor`
+--
+
+CREATE TABLE `login_koor` (
+  `id_koor` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `nama_koor` varchar(50) NOT NULL,
+  `nip` int(30) NOT NULL,
+  `no_hp` varchar(15) NOT NULL,
+  `jk` varchar(20) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `level` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login_koor`
+--
+
+INSERT INTO `login_koor` (`id_koor`, `username`, `password`, `nama_koor`, `nip`, `no_hp`, `jk`, `alamat`, `level`) VALUES
+(1, 'aan', '202cb962ac59075b964b07152d234b70', 'subhan', 112233, '09999', 'laki-laki', 'medaeng', '2'),
+(2, 'irna', '202cb962ac59075b964b07152d234b70', 'irna hong', 1332, '0879', 'perempuan', 'juanda', '2'),
+(3, 'admin3', '123', 'aan', 123456777, '0879', 'laki-laki', 'sda', '2'),
+(4, 'koor1', 'aset567', 'john', 1002, '0881', 'laki-laki', 'surabaya', '2'),
+(5, 'koor1', 'aset567', 'john', 1002, '099999', 'perempuan', 'surabaya', '2'),
+(6, 'koor1', 'aset567', 'john', 1002, '09889', 'perempuan', 'surabaya', '2'),
+(7, 'ari', '123', 'ari tulang', 12345, '0879', 'laki-laki', 'suko', '2'),
+(8, 'ari', '987', 'ari tulang', 12345, '0879', 'laki-laki', 'suko', '2'),
+(9, 'ari', '123', 'ari tulang', 12345, '123134', 'laki-laki', 'suko', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `perubahan`
+--
+
+CREATE TABLE `perubahan` (
+  `id` int(11) NOT NULL,
+  `no_kontrak` char(50) NOT NULL,
+  `keterangan_perubahan` varchar(20) NOT NULL,
+  `status_perubahan` varchar(10) NOT NULL,
+  `uraian` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `perubahan`
+--
+
+INSERT INTO `perubahan` (`id`, `no_kontrak`, `keterangan_perubahan`, `status_perubahan`, `uraian`) VALUES
+(19, 'C00.B01.D2020-11-11.4', '2', '2', 'rubah harga menjadi 2.000.000'),
+(20, 'B02.A01.D2020-11-17.10', '2', '1', 'Rusak karena banjir'),
+(25, 'A00.A01.D2020-11-18.10', '1', '2', 'Rusak karena banjir');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profil`
+--
+
+CREATE TABLE `profil` (
+  `kode_lembaga` char(10) NOT NULL,
+  `nama_lengkap` varchar(50) NOT NULL,
+  `nip` int(50) NOT NULL,
+  `jabatan` varchar(40) NOT NULL,
+  `jk` varchar(10) NOT NULL,
+  `no_hp` varchar(15) NOT NULL,
+  `alamat` varchar(50) NOT NULL,
+  `tahun_menjabat` date NOT NULL,
+  `foto` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `profil`
+--
+
+INSERT INTO `profil` (`kode_lembaga`, `nama_lengkap`, `nip`, `jabatan`, `jk`, `no_hp`, `alamat`, `tahun_menjabat`, `foto`) VALUES
+('B01', 'Bambang', 1232, 'Kepala Sekolah', 'Laki-laki', '088', 'Sidoarjo', '2020-09-10', ''),
+('A01', 'sarkimin', 1233, 'Bendahara', 'Perempuan', '0812', 'Lamongan', '2020-09-01', ''),
+('A01', 'sutejo', 1234, 'Kepala Sekolah', 'Laki-laki', '0811', 'Gresik', '2020-09-02', ''),
+('C01', 'Hadi', 1236, 'Kepala Sekolah', 'Laki-laki', '0882', 'Sidoarjo', '2020-09-09', ''),
+('B01', 'Ida Ayu', 1238, 'Bendahara', 'Perempuan', '0888', 'Sidoarjo', '2020-09-11', ''),
+('A03', 'subhan', 1278, 'Bendahara', 'laki-laki', '0879', 'medaeng', '2020-11-18', 'Untitled69-picsay3.png'),
+('B00', 'abi', 1332, 'Kepala Sekolah', 'laki-laki', '09999', 'Sidoarjo', '2020-10-08', 'hbsjpg'),
+('A02', 'abi', 1567, 'Sekretaris', 'laki-laki', '08799', 'nganjuk', '2020-10-02', '10-maret-2png'),
+('A19', 'abi', 112233, 'Kepala Sekolah', 'laki-laki', '0879', 'babat', '2020-10-08', 'logo-traveloka-travelokacom_ratio-16x9jpg'),
+('B02', 'abi', 112234, 'Kepala Sekolah', '', '0879', 'lamongan', '2020-11-18', 'paris7.jpg'),
+('A00', 'zam', 123123, 'Kepala Sekolah', 'laki-laki', '0879', 'Sidoarjo', '2020-10-14', '10-maret-25.png'),
+('A10', 'amin', 123488, 'Kepala Sekolah', 'laki-laki', '099999', 'Sidoarjo', '2020-11-11', 'lue2.jpg'),
+('B01', 'Heru', 19850915, 'Sekretaris', '', '0918273619', 'Indonesia', '2020-11-10', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ruang`
+--
+
+CREATE TABLE `ruang` (
+  `no_ruang` int(11) NOT NULL,
+  `uraian_ruang` char(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ruang`
+--
+
+INSERT INTO `ruang` (`no_ruang`, `uraian_ruang`) VALUES
+(6, 'GUDANG'),
+(18, 'KANTIN'),
+(17, 'KOPERASI'),
+(20, 'LABORATURIUM BAHASA'),
+(9, 'LABORATURIUM IPA'),
+(8, 'LABORATURIUM KOMPUTER'),
+(22, 'LAINNYA'),
+(12, 'LAPANGAN'),
+(7, 'MUSHOLLA'),
+(4, 'PERPUSTAKAAN'),
+(15, 'RUANG GUGUS'),
+(2, 'RUANG GURU'),
+(3, 'RUANG KELAS'),
+(1, 'RUANG KEPALA SEKOLAH'),
+(16, 'RUANG KETERAMPILAN'),
+(10, 'RUANG MUSIK'),
+(11, 'RUANG OLAH RAGA'),
+(14, 'RUANG PRAMUKA'),
+(21, 'RUANG SERBA GUNA'),
+(19, 'RUANG TU'),
+(13, 'TOILET'),
+(5, 'UKS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sambungan`
+--
+
+CREATE TABLE `sambungan` (
+  `id` int(10) NOT NULL,
+  `nip` varchar(30) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sambungan`
+--
+
+INSERT INTO `sambungan` (`id`, `nip`, `status`) VALUES
+(1, '1003', 'A'),
+(3, '1003', 'C'),
+(50, '1567', '1'),
+(51, '1567', '3'),
+(52, '1234', '2'),
+(53, '1234', '4'),
+(54, '12345678', '1'),
+(55, '12345678', '2'),
+(56, '12345678', '15'),
+(57, '999', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sumber_dana`
+--
+
+CREATE TABLE `sumber_dana` (
+  `no` int(11) NOT NULL,
+  `kode_sd` char(1) NOT NULL,
+  `nama_sd` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sumber_dana`
+--
+
+INSERT INTO `sumber_dana` (`no`, `kode_sd`, `nama_sd`) VALUES
+(1, 'D', 'BOSDA'),
+(2, 'H', 'HIBAH'),
+(3, 'M', 'MUTASI'),
+(4, 'R', 'BOSREG');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `input_data`
+--
+ALTER TABLE `input_data`
+  ADD UNIQUE KEY `no_kontrak` (`no_kontrak`),
+  ADD KEY `sumber_dana` (`sumber_dana`),
+  ADD KEY `input_data_ibfk_2` (`kk`),
+  ADD KEY `kode_lembaga` (`kode_lembaga`),
+  ADD KEY `kb` (`kb`);
+
+--
+-- Indexes for table `kategori_besar`
+--
+ALTER TABLE `kategori_besar`
+  ADD PRIMARY KEY (`no_kategori`),
+  ADD KEY `no_kategori` (`no_kategori`),
+  ADD KEY `nama_kategori` (`nama_kategori`);
+
+--
+-- Indexes for table `kategori_kecil`
+--
+ALTER TABLE `kategori_kecil`
+  ADD PRIMARY KEY (`no`),
+  ADD KEY `kode_kat` (`kode_kat`),
+  ADD KEY `no_kategori_besar` (`no_kategori_besar`),
+  ADD KEY `uraian` (`uraian`);
+
+--
+-- Indexes for table `kecamatan`
+--
+ALTER TABLE `kecamatan`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID` (`ID`),
+  ADD KEY `kode_kec` (`kode_kec`),
+  ADD KEY `nama_kec` (`nama_kec`);
+
+--
+-- Indexes for table `lembaga`
+--
+ALTER TABLE `lembaga`
+  ADD PRIMARY KEY (`kode_lembaga`),
+  ADD KEY `nama_kec` (`nama_kec`),
+  ADD KEY `kode_lembaga` (`kode_lembaga`),
+  ADD KEY `nama_lembaga` (`nama_lembaga`),
+  ADD KEY `ID_kec` (`ID_kec`),
+  ADD KEY `kode_kec` (`kode_kec`);
+
+--
+-- Indexes for table `login_admin`
+--
+ALTER TABLE `login_admin`
+  ADD PRIMARY KEY (`id_admin`),
+  ADD KEY `id_admin` (`id_admin`),
+  ADD KEY `nip` (`nip`);
+
+--
+-- Indexes for table `login_koor`
+--
+ALTER TABLE `login_koor`
+  ADD PRIMARY KEY (`id_koor`);
+
+--
+-- Indexes for table `perubahan`
+--
+ALTER TABLE `perubahan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `profil`
+--
+ALTER TABLE `profil`
+  ADD UNIQUE KEY `nip` (`nip`),
+  ADD KEY `kode_lembaga` (`kode_lembaga`);
+
+--
+-- Indexes for table `ruang`
+--
+ALTER TABLE `ruang`
+  ADD PRIMARY KEY (`no_ruang`),
+  ADD KEY `uraian_ruang` (`uraian_ruang`);
+
+--
+-- Indexes for table `sambungan`
+--
+ALTER TABLE `sambungan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sumber_dana`
+--
+ALTER TABLE `sumber_dana`
+  ADD PRIMARY KEY (`no`),
+  ADD UNIQUE KEY `nama_sd` (`nama_sd`),
+  ADD KEY `kode_sd` (`kode_sd`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `kategori_besar`
+--
+ALTER TABLE `kategori_besar`
+  MODIFY `no_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `kategori_kecil`
+--
+ALTER TABLE `kategori_kecil`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `login_admin`
+--
+ALTER TABLE `login_admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `login_koor`
+--
+ALTER TABLE `login_koor`
+  MODIFY `id_koor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `perubahan`
+--
+ALTER TABLE `perubahan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `ruang`
+--
+ALTER TABLE `ruang`
+  MODIFY `no_ruang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `sambungan`
+--
+ALTER TABLE `sambungan`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `kategori_kecil`
+--
+ALTER TABLE `kategori_kecil`
+  ADD CONSTRAINT `kategori_kecil_ibfk_1` FOREIGN KEY (`no_kategori_besar`) REFERENCES `kategori_besar` (`no_kategori`);
+
+--
+-- Constraints for table `lembaga`
+--
+ALTER TABLE `lembaga`
+  ADD CONSTRAINT `lembaga_ibfk_1` FOREIGN KEY (`ID_kec`) REFERENCES `kecamatan` (`ID`),
+  ADD CONSTRAINT `lembaga_ibfk_2` FOREIGN KEY (`kode_kec`) REFERENCES `kecamatan` (`kode_kec`),
+  ADD CONSTRAINT `lembaga_ibfk_3` FOREIGN KEY (`nama_kec`) REFERENCES `kecamatan` (`nama_kec`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
