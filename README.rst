@@ -6,7 +6,7 @@ SimAset (Sistem Informasi Manajemen Aset)
 Description
 ***********
 
-This web app was made for internship program at Dinas Pendidikan dan Kebudayaan Kabupaten Sidoarjo, Aug-Nov 2020. Built with CodeIgniter 3 Framework(Based in PHP) and MariaDB database.
+This web app was made for internship program at Dinas Pendidikan dan Kebudayaan Kabupaten Sidoarjo, Aug-Nov 2020. Built with CodeIgniter 3 Framework (Based on PHP) and MariaDB database.
 
 ******************
 how to use the app
