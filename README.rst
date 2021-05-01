@@ -21,11 +21,9 @@ how to use the app
 Disclaimer
 **********
 
-This is a free-to-use software under MIT license. if you want to help me developing this app, feel free to fork and commit. I'm opened for questions, critics, suggestions, and any other kind of supports.
-
+This is a free-to-use software under MIT license. if you want to help me developing this app, feel free to fork and commit. I'm opened for questions, critics, suggestions, and any other kind of supports. 
 Thank you.
 
 
-Best Regards,
-
+Best Regards, 
 Muhammad Amien.
